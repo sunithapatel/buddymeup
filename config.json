@@ -1,0 +1,31 @@
+{
+  "round_num": 3,
+  "round_num_id": 91,
+  "signup_open": "False",
+  "dates": {
+    "year": "2021",
+    "start_date": "2021-04-12",
+    "end_date": "2021-06-20",
+    "signup_date_html": "March 29",
+    "start_date_html": "April 12, 2021"
+  },
+  "db": {
+    "user": "postgres",
+    "host": "localhost",
+    "db_name": "buddymeup"
+  },
+  "filepath": {
+    "python": "datafiles_sens/python/pairing_",
+    "cloud": "datafiles_sens/cloud/pairing_"
+  },
+  "file_name": {
+    "signups": "/survey_response.csv",
+    "buddy_results" : "_buddies.csv",
+    "data_announc" : "_data_announc.csv",
+    "prior_matches" : "all_prior_matches.csv"
+  },
+  "contact": {
+    "email": "buddymeup@womenwhocode.com",
+    "slack": "@Isabella"
+  }
+}

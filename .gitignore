@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# sensitive datafiles
+datafiles_sens/
+datafiles/pairing_2/survey_response.csv
+datafiles*
+
+# virtual envs
+venv/
+
+# functions in work
+add_functs.py
+
+# test scripts and data
+test*
+
+# secrets
+config_secrets.json
+
+# vscode settings
+.vscode/
+
+# Tests in Jupyter Notebooks
+notebook_tests/
+
+# Early testing with Python NLP
+score_objectives.py
+
+# .idea <- not sure what this is?
+.idea/
