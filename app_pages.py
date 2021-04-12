@@ -136,7 +136,7 @@ def page_about():
         </p>
         <h3 style="margin-top: 3rem">Python and Cloud Tracks</h3>
         <p>
-            BuddyMeUp does not only buddy-up Pythonistas &ndash; we're coming to the Cloud in April!  
+            BuddyMeUp does not only buddy-up Pythonistas &ndash; Cloud enthusiasts can find their buddy with BuddyMeUp too!  
         </p>
         <div class="announce">
             <p style='text-align: center'>
