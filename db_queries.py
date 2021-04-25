@@ -73,7 +73,7 @@ var = ['id', 'email', 'name', 'slack_name', 'gender', 'timezone', 'age',  'topic
               'experience', 'mentor_choice', 'relation_pref', 'freq_pref', 'gender_pref',
               'timezone_pref', 'amount_buddies', 'objectives', 'personal_descr'] #todo put this into config file
 
-#topics_python = ["data science", "mobile", "machine learning", "backend", "frontend"] #todo put this into config file
+topics_python = ["data science", "mobile", "machine learning", "backend", "frontend"] #todo put this into config file
 
 
 signup_info_var = "ua.{}, ua.{}, ua.{}, ua.{}, ur.{}, " \
