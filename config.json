@@ -4,10 +4,10 @@
   "signup_open": "False",
   "dates": {
     "year": "2021",
-    "start_date": "2021-04-12",
-    "end_date": "2021-06-20",
-    "signup_date_html": "March 29",
-    "start_date_html": "April 12, 2021"
+    "start_date": "2021-07-05",
+    "end_date": "2021-09-13",
+    "signup_date_html": "June 21, 2021",
+    "start_date_html": "July 05, 2021"
   },
   "db": {
     "user": "postgres",
