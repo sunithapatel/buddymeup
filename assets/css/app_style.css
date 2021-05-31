@@ -38,6 +38,9 @@ body {
 .css-g3p7qd .stAlert {
   background: #f9f9f9c7;
 }
+.stAlert{
+  margin-top: 20px;
+}
 /* text in navbar */
 .st-ae, .st-b7 {
   font-family: inherit;

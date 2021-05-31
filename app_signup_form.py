@@ -3,6 +3,7 @@ Module configuring the signup sheet for data input
 """
 
 import streamlit as st
+import streamlit.components.v1 as components
 import app_db_setup as dbs
 import string
 import numpy as np
@@ -25,13 +26,19 @@ def signup():
     objectives, personal_descr, comments
     :return: dictionary containing participant information 
     """
-    st.header("\nWelcome! Share your ~~secrets~~ info here!")
 
-    participant_info_contacts = {
-        "email": st.text_input("Email"),
-        "name": st.text_input("Name"),
-        "slack_name": st.text_input("Slack name")
-    }
+    st.header("Please fill in the following:")
+
+    participant_info_contacts = {}
+    labels = ["email", "name", "Slack name"]
+    for label in labels:
+        field, check = st.beta_columns(2)
+        field = field.text_input(string.capwords(label))
+        if len(field.strip()) == 0:
+            check.error(f"Required - please input your {label}")
+        else:
+            check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
+            participant_info_contacts[label] = field
 
     city, state, country = st.beta_columns(3)
     participant_info_location = {
