@@ -6,6 +6,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import app_db_setup as dbs
 import string
+import re
 import numpy as np
 import pandas as pd
 import requests
@@ -30,11 +31,21 @@ def signup():
     st.header("Please fill in the following:")
 
     participant_info_contacts = {}
-    labels = ["email", "name", "Slack name"]
+
+    email, check = st.beta_columns(2)
+    email = email.text_input("Email")
+    if re.match(r'^.+@.+\..{2,3}$', email.strip()):
+        check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
+        participant_info_contacts["email"] = email
+    else:  # invalid email
+        check.error(f"Required - please input your email")
+    
+
+    labels = ["name", "Slack name"]
     for label in labels:
         field, check = st.beta_columns(2)
         field = field.text_input(string.capwords(label))
-        if len(field.strip()) == 0:
+        if len(field.strip()) < 2:  # should contain at least 2 chars
             check.error(f"Required - please input your {label}")
         else:
             check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
