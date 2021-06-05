@@ -1,7 +1,7 @@
 {
   "round_num": 3,
   "round_num_id": 91,
-  "signup_open": "False",
+  "signup_open": "True",
   "dates": {
     "year": "2021",
     "start_date": "2021-07-05",
