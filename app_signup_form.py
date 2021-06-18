@@ -54,11 +54,9 @@ def signup():
     city = string.capwords(city.text_input("Your city"))
     state = state.text_input("Your state/province (if applicable)")
     country = country.text_input("Your country")
-    participant_info = {
-        "city": city,
-        "state": state,
-        "country": country
-    }
+    participant_info["city"] = city
+    participant_info["state"] = state
+    participant_info["country"] = country    
 
     # Get latitude and longitude of participant's location
     location_valid, latitude, longitude = get_lat_long(city, state, country)
@@ -68,13 +66,9 @@ def signup():
     
     draw_map(location_valid, latitude, longitude)  # will draw default map if location not valid
 
-    participant_info = {
-        "timezone": offset,
-        "latitude": latitude,
-        "longitude": longitude
-    }
-
-    participant_info = {}
+    participant_info["timezone"] = offset
+    participant_info["latitude"] = latitude 
+    participant_info["longitude"] = longitude 
 
     age, check = st.beta_columns(2)
     age = age.number_input("Age", min_value=0, max_value=100)
@@ -189,7 +183,7 @@ def signup():
     participant_info["comments"] = comments
 
     timestamp = datetime.now(tz=dt_timezone.utc)
-    participant_info["timestamp"]: timestamp.strftime("%Y/%m/%d %H:%M:%S")
+    participant_info["timestamp"] = timestamp.strftime("%Y/%m/%d %H:%M:%S")
 
     # Turn "topic" from array to string
     if "topic" in participant_info:

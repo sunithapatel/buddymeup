@@ -113,7 +113,7 @@ def save(connection, response):
         dates = conf_data["dates"]
         cur.execute(insert_dates, [dates["year"], dates["start_date"], dates["end_date"]])
         cur.execute(insert_users_all, [response["email"], response["name"], 
-                        response["slack_name"]])
+                        response["Slack name"]])
         cur.execute(insert_locations, [response["city"], response["state"], response["country"],
                         response["latitude"], response["longitude"], response["timezone"]])
         cur.execute("SELECT id FROM users_all WHERE email = %s;", [response["email"]])
