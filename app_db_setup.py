@@ -27,7 +27,7 @@ def init_db():
     try:
         # connect to the PostgreSQL server
         connection = psycopg2.connect(DATABASE_URL)
-        connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        connection.autocommit = False
         cur = connection.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS rounds (
                         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -130,6 +130,7 @@ def save(connection, response):
                         response["relation_pref"], response["freq_pref"], response["gender_pref"], 
                         response["timezone_pref"], response["amount_buddies"], response["objectives"], 
                         response["personal_descr"], response["comments"], round_id])
+        connection.commit()
         st.success(f"""Thanks for signing up!
                     You will be notified about your buddy on {conf_data['dates']['start_date_html']}.""")
         st.balloons()
@@ -148,6 +149,7 @@ def save(connection, response):
                         message ``{conf_data["contact"]["slack"]}`` on the WWCodePython 
                         #buddymeup slack channel 🆘.""")
         print(e)
+        connection.rollback()
     connection.close()
 
 
