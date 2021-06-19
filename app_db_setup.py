@@ -89,9 +89,11 @@ def init_db():
         cur.execute("""CREATE UNIQUE INDEX IF NOT EXISTS user_round_match_null
 	                    ON users_rounds (fk_user_id, fk_round_id)
 	                    WHERE fk_match_id IS NULL;""")
+        connection.commit()
         return connection
     except psycopg2.DatabaseError as e:
         print(e)
+        connection.rollback()
 
 def save(connection, response):
     cur = connection.cursor()
