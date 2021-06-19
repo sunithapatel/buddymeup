@@ -32,9 +32,10 @@ def init_db():
         cur.execute("""CREATE TABLE IF NOT EXISTS rounds (
                         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                         year INTEGER NOT NULL,
+                        round_num INTEGER NOT NULL,
                         start_date DATE UNIQUE NOT NULL,
                         end_date DATE UNIQUE NOT NULL,
-                        CONSTRAINT round_dates UNIQUE (year, start_date, end_date));""")
+                        CONSTRAINT year_round UNIQUE (year, round_num));""")
         cur.execute("""CREATE TABLE IF NOT EXISTS users_all (
                         id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
                         email VARCHAR(255) UNIQUE NOT NULL,
@@ -97,8 +98,8 @@ def init_db():
 
 def save(connection, response):
     cur = connection.cursor()
-    insert_dates = """INSERT INTO rounds (year, start_date, end_date)
-                        VALUES (%s, %s, %s) ON CONFLICT ON CONSTRAINT round_dates DO NOTHING;"""
+    insert_dates = """INSERT INTO rounds (year, round_num, start_date, end_date)
+                        VALUES (%s, %s, %s, %s) ON CONFLICT ON CONSTRAINT year_round DO NOTHING;"""
     insert_users_all = """INSERT INTO users_all (email, name, slack_name)
                             VALUES (%s, %s, %s) ON CONFLICT (email) DO NOTHING;"""
     insert_locations = """INSERT INTO locations (city, state, country, latitude, longitude, timezone)
@@ -113,7 +114,8 @@ def save(connection, response):
 
     try:
         dates = conf_data["dates"]
-        cur.execute(insert_dates, [dates["year"], dates["start_date"], dates["end_date"]])
+        cur.execute(insert_dates, [dates["year"], dates["round_num"], 
+                        dates["start_date"], dates["end_date"]])
         cur.execute(insert_users_all, [response["email"], response["name"], 
                         response["Slack name"]])
         cur.execute(insert_locations, [response["city"], response["state"], response["country"],
