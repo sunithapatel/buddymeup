@@ -600,17 +600,6 @@ def page_buddymeup():
     """, unsafe_allow_html=True)
 
 
-# # Page for sign-up
-# def page_sign_up():
-#     select_track = st.sidebar.radio("Track:", (
-#                         "Python",
-#                         "Cloud"))
-#     if select_track == "Python":
-#         page_sign_up_python()
-#     elif select_track == "Cloud":
-#         page_sign_up_cloud()
-    
-
 def page_sign_up():
     st.title("Sign Me Up!")
     st.header("I mean, BuddyMeUp! :wink:")
