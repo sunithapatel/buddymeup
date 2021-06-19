@@ -134,17 +134,17 @@ def save(connection, response):
                         response["relation_pref"], response["freq_pref"], response["gender_pref"], 
                         response["timezone_pref"], response["amount_buddies"], response["objectives"], 
                         response["personal_descr"], response["comments"], round_id])
-        connection.commit()
-        st.success(f"""Thanks for signing up!
-                    You will be notified about your buddy on {conf_data['dates']['start_date_html']}.""")
-        st.balloons()
     except psycopg2.IntegrityError as e:
         if str(e).startswith("duplicate key value violates unique constraint \"user_round_match_null\""):
             st.error(f"""It looks like you have previously signed up for this round! 😍  
                         \nIf unsure, please email <{conf_data["contact"]["email"]}> or
                         message ``{conf_data["contact"]["slack"]}`` on the WWCodePython 
                         #buddymeup Slack channel and we'll check for you.""")
+        elif str(e).startswith("new row for relation \"locations\" violates check constraint \"locations_details_check\""):
+            st.error(f"""It looks like there is a problem with your input for location 😅; 
+                     please go back and check that the map correctly pinpoints your location.""")
         else:
+            print(e)
             st.error(f"""Signup unsuccessful 😱.  But don't worry: check that  
                         - all questions have been answered (except last one on comments, which is optional);  
                         - your second-to-last and third-to-last responses contain at least 100 characters;  
@@ -154,11 +154,42 @@ def save(connection, response):
                         #buddymeup slack channel 🆘.""")
         print(e)
         connection.rollback()
-    connection.close()
+    except KeyError as e:
+        e = str(e)[1:-1]
+        description = key_lookup(e)
+        st.error(f"""It looks like there is a problem with the input for {description} 😅; 
+                     please go back and check that your value is valid.""")
+        print(e)
+        connection.rollback()
+    else:
+        connection.commit()
+        st.success(f"""Thanks for signing up!
+                    You will be notified about your buddy on {conf_data['dates']['start_date_html']}.""")
+        st.balloons()
+    finally:
+        connection.close()
 
 
-
-
+# Look up more descriptive field name for given KeyError e
+def key_lookup(e):
+  key_dict = {
+      'email': 'your email',
+      'name': 'your name',
+      'Slack name': 'your Slack name',
+      'age': 'your age',
+      'gender': 'your gender',
+      'topic': 'the areas of Python you\'re focusing on',
+      'experience': 'your level of experience',
+      'mentor_choice': 'whether you\'d like to be a mentor',
+      'relation_pref': 'your preferred relationship with your buddy - casual or structured',
+      'gender_pref': 'your preference for your buddy\'s gender',
+      'timezone_pref': 'your preference for your buddy\'s timezone',
+      'freq_pref': 'your preference for how often you\'d like to meet with your buddy',
+      'amount_buddies': 'whether you\'d like one or two buddies',
+      'objectives': 'your coding objectives',
+      'personal_descr': 'your personal description'
+  }
+  return key_dict[e]
 
 
 
