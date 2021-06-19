@@ -155,7 +155,7 @@ def save(connection, response):
         print(e)
         connection.rollback()
     except KeyError as e:
-        e = str(e)[1:-1]
+        e = str(e)[1:-1]  # strip quote marks around string
         description = key_lookup(e)
         st.error(f"""It looks like there is a problem with the input for {description} 😅; 
                      please go back and check that your value is valid.""")
@@ -176,6 +176,8 @@ def key_lookup(e):
       'email': 'your email',
       'name': 'your name',
       'Slack name': 'your Slack name',
+      'city': 'your location',
+      'country': 'your location',
       'age': 'your age',
       'gender': 'your gender',
       'topic': 'the areas of Python you\'re focusing on',
