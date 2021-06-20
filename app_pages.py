@@ -126,17 +126,29 @@ def page_about():
             </div>
         </div>
         <p>
-            We will partner you up with one (or two!) coding enthusiast(s) based on your respective interests and preferences. You will be able to:
+            We will partner you up for 10 weeks with one (or two!) coding enthusiast(s) 
+            based on your respective interests and preferences. You will be able to:
             <ul>
                 <li>work on your own coding projects 📊</li>
                 <li>practice together on coding exercises 💻</li>
                 <li>vent over your latest seemingly unsolvable coding problem 😤</li>
-                <li>or just meet up virtually on a regular basis to discuss your coding journey over a coffee ☕ or even cocktail 🍸!</li>
+                <li>or just meet up virtually on a regular basis to discuss your coding journey 
+                over a coffee ☕ or even cocktail 🍸!</li>
             </ul>
         </p>
-        <h3 style="margin-top: 3rem">Python and Cloud Tracks</h3>
+        <hr class="content-divider">
+        <h3 style="margin-top: 1rem">What's new in July 2021?</h3>
         <p>
-            BuddyMeUp does not only buddy-up Pythonistas &ndash; Cloud enthusiasts can find their buddy with BuddyMeUp too!  
+            We get it &mdash; you sign up to code with a buddy with the best of intentions:
+            maybe you plan to write and deploy a Flask application together, or
+            complete ten challenges on HackerRank by the end of your ten weeks...
+            but by week two, life got in the way, and all your plans fell by the wayside 😞.
+        </p>
+        <p>
+            Well, we <em>really</em> want each pair to achieve their coding goals, no matter 
+            what they may be.  So, for extra motivation, this round we will have <strong>mentors</strong> 
+            personally checking in on each pair (who would like this option) every fortnight 
+            to offer support and make sure that you are on track 🚆.
         </p>
         <div class="announce">
             <p style='text-align: center'>
@@ -641,6 +653,7 @@ def page_sign_up_python():
         if slack_pw_py or python_button:
             if slack_pw_py == correct_slack_pw_py:
                 participant_info = app_signup_form.signup()  # returns participant info as a dict
+                st.markdown("<br>", unsafe_allow_html=True)
                 if st.checkbox("I understand that my data is processed to (1) evaluate matching buddies from the pool of participants and to (2) notify me via email and slack about my buddy."):
                     if st.button("Submit"):
                         app_signup_form.save(participant_info)
