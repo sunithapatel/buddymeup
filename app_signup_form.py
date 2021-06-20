@@ -33,8 +33,8 @@ def signup():
     participant_info = {}
 
     email, check = st.beta_columns(2)
-    email = email.text_input("Email")
-    if re.match(r'^.+@.+\..{2,3}$', email.strip()):
+    email = email.text_input("Email").strip()
+    if re.match(r'^.+@.+\..{2,3}$', email):
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["email"] = email
     else:  # invalid email
@@ -43,17 +43,17 @@ def signup():
     labels = ["name", "Slack name"]
     for label in labels:
         field, check = st.beta_columns(2)
-        field = field.text_input(string.capwords(label))
-        if len(field.strip()) < 2:  # should contain at least 2 chars
+        field = field.text_input(string.capwords(label)).strip()
+        if len(field) < 2:  # should contain at least 2 chars
             check.error(f"Please input your {label}")
         else:
             check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
             participant_info[label] = field
 
     city, state, country = st.beta_columns(3)
-    city = string.capwords(city.text_input("Your city"))
-    state = state.text_input("Your state/province (if applicable)")
-    country = country.text_input("Your country")
+    city = string.capwords(city.text_input("Your city")).strip()
+    state = state.text_input("Your state/province (if applicable)").strip()
+    country = country.text_input("Your country").strip()
 
     # Get latitude, longitude, and UTC offset of participant's location
     location_valid, latitude, longitude = get_lat_long(city, state, country)
@@ -90,7 +90,7 @@ def signup():
     topic = topic.multiselect("What area(s) of Python are you focusing on?",
                                 ("Data Science", "Machine Learning", "Mobile", "Backend", "Frontend"))
     if not topic:
-        check.error(f"Please input your focus topics")
+        check.error(f"Please input one or more focus topic(s)")
     else:
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["topic"] = topic
@@ -167,7 +167,7 @@ def signup():
     st.markdown("<br>", unsafe_allow_html=True)
     objectives = st.text_area("Your coding objectives", "")
     if len(objectives.strip()) < 100:
-        st.error("""Please tell us why you'd like to join BuddyMeUp in at least 100 characters; 
+        st.error("""Please tell us above why you'd like to join BuddyMeUp in at least 100 characters; 
                     the more descriptive, the better we could match you!""")
     else:
         participant_info["objectives"] = objectives
@@ -176,7 +176,7 @@ def signup():
     personal_descr = st.text_area("""Please give a little description about yourself 
                                         so that we can get to know you better""", "")
     if len(personal_descr.strip()) < 100:
-        st.error("""Please write at least 100 characters; 
+        st.error("""Please write at least 100 characters above; 
                     the more descriptive, the better we could match you!""")
     else:
         participant_info["personal_descr"] = personal_descr
