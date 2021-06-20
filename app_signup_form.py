@@ -164,6 +164,7 @@ def signup():
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["relation_pref"] = relation_pref
     
+    st.markdown("<br>", unsafe_allow_html=True)
     objectives = st.text_area("Your coding objectives", "")
     if len(objectives.strip()) < 100:
         st.error("""Please tell us why you'd like to join BuddyMeUp in at least 100 characters; 

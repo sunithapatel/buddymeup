@@ -125,8 +125,8 @@ def save(connection, response):
         cur.execute("SELECT id FROM locations WHERE latitude = %s AND longitude = %s;",
                         [response["latitude"], response["longitude"]])
         loc_id = cur.fetchone()
-        cur.execute("SELECT id FROM rounds WHERE year = %s AND start_date = %s AND end_date = %s;",
-                        [dates["year"], dates["start_date"], dates["end_date"]])
+        cur.execute("SELECT id FROM rounds WHERE year = %s AND round_num = %s;",
+                        [dates["year"], dates["round_num"]])
         round_id = cur.fetchone()
         cur.execute(insert_users_rounds, [response["timestamp"], user_id, loc_id, 
                         response["gender"], response["age"], response["topic"], 
