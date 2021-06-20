@@ -641,6 +641,7 @@ def page_sign_up_python():
         if slack_pw_py or python_button:
             if slack_pw_py == correct_slack_pw_py:
                 participant_info = app_signup_form.signup()  # returns participant info as a dict
+                st.markdown("<br>", unsafe_allow_html=True)
                 if st.checkbox("I understand that my data is processed to (1) evaluate matching buddies from the pool of participants and to (2) notify me via email and slack about my buddy."):
                     if st.button("Submit"):
                         app_signup_form.save(participant_info)

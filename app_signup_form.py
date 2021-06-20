@@ -33,8 +33,8 @@ def signup():
     participant_info = {}
 
     email, check = st.beta_columns(2)
-    email = email.text_input("Email")
-    if re.match(r'^.+@.+\..{2,3}$', email.strip()):
+    email = email.text_input("Email").strip()
+    if re.match(r'^.+@.+\..{2,3}$', email):
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["email"] = email
     else:  # invalid email
@@ -43,41 +43,35 @@ def signup():
     labels = ["name", "Slack name"]
     for label in labels:
         field, check = st.beta_columns(2)
-        field = field.text_input(string.capwords(label))
-        if len(field.strip()) < 2:  # should contain at least 2 chars
+        field = field.text_input(string.capwords(label)).strip()
+        if len(field) < 2:  # should contain at least 2 chars
             check.error(f"Please input your {label}")
         else:
             check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
             participant_info[label] = field
 
     city, state, country = st.beta_columns(3)
-    city = string.capwords(city.text_input("Your city"))
-    state = state.text_input("Your state/province (if applicable)")
-    country = country.text_input("Your country")
-    participant_info = {
-        "city": city,
-        "state": state,
-        "country": country
-    }
+    city = string.capwords(city.text_input("Your city")).strip()
+    state = state.text_input("Your state/province (if applicable)").strip()
+    country = country.text_input("Your country").strip()
 
-    # Get latitude and longitude of participant's location
+    # Get latitude, longitude, and UTC offset of participant's location
     location_valid, latitude, longitude = get_lat_long(city, state, country)
     offset = utc_offset(location_valid, latitude, longitude)
+    
     if location_valid:
         print_timezone(offset)
+        participant_info["city"] = city
+        participant_info["state"] = state
+        participant_info["country"] = country    
+        participant_info["timezone"] = offset
+        participant_info["latitude"] = latitude 
+        participant_info["longitude"] = longitude 
     
     draw_map(location_valid, latitude, longitude)  # will draw default map if location not valid
 
-    participant_info = {
-        "timezone": offset,
-        "latitude": latitude,
-        "longitude": longitude
-    }
-
-    participant_info = {}
-
     age, check = st.beta_columns(2)
-    age = age.number_input("Age", min_value=0, max_value=100)
+    age = age.number_input("Your age", min_value=0, max_value=100)
     if age < 16:
         check.error(f"Please input your age (at least 16)")
     else:
@@ -96,7 +90,7 @@ def signup():
     topic = topic.multiselect("What area(s) of Python are you focusing on?",
                                 ("Data Science", "Machine Learning", "Mobile", "Backend", "Frontend"))
     if not topic:
-        check.error(f"Please input your focus topics")
+        check.error(f"Please input one or more focus topic(s)")
     else:
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["topic"] = topic
@@ -170,26 +164,29 @@ def signup():
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["relation_pref"] = relation_pref
     
+    st.markdown("<br>", unsafe_allow_html=True)
     objectives = st.text_area("Your coding objectives", "")
     if len(objectives.strip()) < 100:
-        st.error("""Please write at least 100 characters; 
+        st.error("""Please tell us above why you'd like to join BuddyMeUp in at least 100 characters; 
                     the more descriptive, the better we could match you!""")
     else:
         participant_info["objectives"] = objectives
 
+    st.markdown("<br>", unsafe_allow_html=True)
     personal_descr = st.text_area("""Please give a little description about yourself 
                                         so that we can get to know you better""", "")
     if len(personal_descr.strip()) < 100:
-        st.error("""Please write at least 100 characters; 
+        st.error("""Please write at least 100 characters above; 
                     the more descriptive, the better we could match you!""")
     else:
         participant_info["personal_descr"] = personal_descr
 
-    comments = st.text_area("Comments", "")
+    st.markdown("<br>", unsafe_allow_html=True)
+    comments = st.text_area("Any comments you'd like to make", "")
     participant_info["comments"] = comments
 
     timestamp = datetime.now(tz=dt_timezone.utc)
-    participant_info["timestamp"]: timestamp.strftime("%Y/%m/%d %H:%M:%S")
+    participant_info["timestamp"] = timestamp.strftime("%Y/%m/%d %H:%M:%S")
 
     # Turn "topic" from array to string
     if "topic" in participant_info:
