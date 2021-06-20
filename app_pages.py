@@ -120,7 +120,7 @@ def page_about():
             </div>
         </div>
         <p>
-            We will partner you up with one (or two!) python enthusiast(s) based on your respective interests and preferences. You will be able to:
+            We will partner you up with one (or two!) Python enthusiast(s) based on your respective interests and preferences. You will be able to:
             We will partner you up for 10 weeks with one (or two!) coding enthusiast(s) 
             based on your respective interests and preferences. You will be able to:
             <ul>
@@ -625,15 +625,16 @@ def page_sign_up():
         correct_slack_pw_py = get_config_secrets('wwc_slack_pw_py')
         st.markdown("""
                     <p style='margin-top: 30px; margin-bottom: 30px;'>
-                    You can find the key in the WomenWhoCode Python slack community.
-                    Having all BuddyMeUp participants join the slack community gives us a place to communicate and interact 
+                    You can find the signup key in the WomenWhoCode Python Slack community.
+                    Having all BuddyMeUp participants join the Slack community gives us a place to communicate and interact 
                     and saves us the struggle from spamming your email/junk-folder.
                     </p>
                     """, unsafe_allow_html=True)
-        slack_pw_py = st.text_input("🐍 Signup key for Python", "")
-        python_button = st.button("Continue to Python Signup")
-        st.info(f"""🐍 Join the [Python slack community] ({get_config_secrets('wwc_py_slack_invite')}) 
-                    #buddymeup channel to get the key.""")
+        st.info(f"""🐍 Join the [Python Slack community] ({get_config_secrets('wwc_py_slack_invite')}) 
+                    #buddymeup channel to get the signup key.""")
+        st.markdown("<br>", unsafe_allow_html=True)
+        slack_pw_py = st.text_input("Signup key for Python", "")
+        python_button = st.button("Open signup form")
 
         if slack_pw_py or python_button:
             if slack_pw_py == correct_slack_pw_py:
