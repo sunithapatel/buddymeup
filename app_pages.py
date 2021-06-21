@@ -31,9 +31,6 @@ def img_to_bytes(img_path):
 wwc_python_logo_html = "<img src='data:image/png;base64,{}' class='img-fluid logo logo-wwc-python'>".format(
     img_to_bytes("assets/images/wwc_python_logo.png")
 )
-wwc_cloud_logo_html = "<img src='data:image/png;base64,{}' class='img-fluid logo logo-wwc-cloud'>".format(
-    img_to_bytes("assets/images/wwc_cloud_logo.png")
-)
 phone_logo_html = "<img src='data:image/png;base64,{}' class='img-fluid logo'>".format(
     img_to_bytes("assets/images/phone_logo.png")
 )
@@ -115,17 +112,15 @@ def page_about():
         <h3 style='text-align: center'>
             Virtual match-making... 
             <br>
-            for WomenWhoCode Pythonistas and Cloud-developers.
+            for WomenWhoCode Pythonistas.
         </h3>
         <div style='display: flex; justify-content: center'>
             <div class='wwc-logo-container'>
                 {wwc_python_logo_html}
             </div>
-            <div class='wwc-logo-container'>
-                {wwc_cloud_logo_html}
-            </div>
         </div>
         <p>
+            We will partner you up with one (or two!) Python enthusiast(s) based on your respective interests and preferences. You will be able to:
             We will partner you up for 10 weeks with one (or two!) coding enthusiast(s) 
             based on your respective interests and preferences. You will be able to:
             <ul>
@@ -277,8 +272,7 @@ def page_ideas():
     st.header("💡 **Ideas and inspiration**")
 
     st.markdown(f"""
-                Below are some Python-related resources.  Find our Cloud related resources  
-                [here] (https://docs.google.com/document/d/1_-wSgVyvJRQaS8YNkvRZ8Im7-PKm3G3EhChokKILk6c/edit?usp=sharing).
+                Below are some Python-related resources.
                 If you have suggestions for other resources that you think would be helpful for other
                 buddies in this program, please [let us know]({get_config_secrets('updates_comments')})!         
                 """)
@@ -623,18 +617,7 @@ def page_buddymeup():
     """, unsafe_allow_html=True)
 
 
-# Page for sign-up
 def page_sign_up():
-    select_track = st.sidebar.radio("Track:", (
-                        "Python",
-                        "Cloud"))
-    if select_track == "Python":
-        page_sign_up_python()
-    elif select_track == "Cloud":
-        page_sign_up_cloud()
-    
-
-def page_sign_up_python():
     st.title("Sign Me Up!")
     st.header("I mean, BuddyMeUp! :wink:")
 
@@ -642,13 +625,16 @@ def page_sign_up_python():
         correct_slack_pw_py = get_config_secrets('wwc_slack_pw_py')
         st.markdown("""
                     <p style='margin-top: 30px; margin-bottom: 30px;'>
-                    This will lead you to the <strong>Python-track</strong> sign-up form.  
-                    For Cloud, please select the appropriate button on the left.</p>
+                    You can find the signup key in the WomenWhoCode Python Slack community.
+                    Having all BuddyMeUp participants join the Slack community gives us a place to communicate and interact 
+                    and saves us the struggle from spamming your email/junk-folder.
+                    </p>
                     """, unsafe_allow_html=True)
-        slack_pw_py = st.text_input("🐍 Signup key for Python", "")
-        python_button = st.button("Continue to Python Signup")
-        st.info(f"""🐍 Join the [Python slack community] ({get_config_secrets('wwc_py_slack_invite')}) 
-                    #buddymeup channel to get the python-key.""")
+        st.info(f"""🐍 Join the [Python Slack community] ({get_config_secrets('wwc_py_slack_invite')}) 
+                    #buddymeup channel to get the signup key.""")
+        st.markdown("<br>", unsafe_allow_html=True)
+        slack_pw_py = st.text_input("Signup key for Python", "")
+        python_button = st.button("Open signup form")
 
         if slack_pw_py or python_button:
             if slack_pw_py == correct_slack_pw_py:
@@ -669,47 +655,6 @@ def page_sign_up_python():
         st.info(f"""Oh no! Sign-ups for BuddyMeUp has closed for the current round.
                     Stay tuned on the [Python Slack] ({get_config_secrets('wwc_py_slack_invite')})
                     #buddymeup channel to get notifications of dates for the next round!""")
-
-
-def page_sign_up_cloud():
-    st.title("Sign Me Up!")
-    st.header("I mean, BuddyMeUp! :wink:")
-
-    if conf_data["signup_open"] == "True":
-        st.markdown("""
-                    <p style='margin-top: 30px; margin-bottom: 30px;'>
-                    This will lead you to the <strong>Cloud-track</strong> sign-up form.  
-                    For Python, please select the appropriate button on the left.</p>
-                    """, unsafe_allow_html=True)
-
-        correct_slack_pw_cloud = get_config_secrets('wwc_slack_pw_cloud')
-
-        slack_pw_cloud = st.text_input("☁ Signup key for Cloud", "")
-        cloud_button = st.button("Continue to Cloud Signup")
-        st.info(f"""☁ Join the [Cloud slack community] ({get_config_secrets('wwc_cloud_slack_invite')})
-                    #buddymeup channel to get the cloud-key.""")
-
-        if slack_pw_cloud or cloud_button:
-            if slack_pw_cloud == correct_slack_pw_cloud:
-                url = get_config_secrets("wwc_cloud_signup_url")
-                # url = "www.google.com"
-                st.markdown(f"""<h2 style='margin-top: 2em'>
-                                    <a target='_blank' href={url}>Click here for Cloud sign-up form</a>
-                                </h2>
-                            """, unsafe_allow_html=True)
-            else:
-                st.error(f"""Oops, that did not work. Check the #buddymeup channel in the 
-                                WWCode Cloud Slack Community for the right key.""")
-    else: # sign-up period is closed
-        st.markdown(f"""
-            <div class="emoji-wrapper">
-                {emoji_sad_slide_html}
-            </div>
-                """, unsafe_allow_html=True)
-        st.info(f"""Oh no! Sign-ups for BuddyMeUp has closed for the current round.
-                    Stay tuned on the [Cloud Slack] ({get_config_secrets('wwc_cloud_slack_invite')})
-                    #buddymeup channel to get notifications of dates for the next round!""")
-
 
 
 
