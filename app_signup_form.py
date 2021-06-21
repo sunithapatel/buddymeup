@@ -33,7 +33,7 @@ def signup():
     participant_info = {}
 
     email, check = st.beta_columns(2)
-    email = email.text_input("Email").strip()
+    email = email.text_input("Email").strip().lower()
     if re.match(r'^.+@.+\..{2,3}$', email):
         check.markdown("<p style='margin-top: 40px'>&#10003</p>", unsafe_allow_html=True)
         participant_info["email"] = email
@@ -165,17 +165,19 @@ def signup():
         participant_info["relation_pref"] = relation_pref
     
     st.markdown("<br>", unsafe_allow_html=True)
-    objectives = st.text_area("Your coding objectives", "")
-    if len(objectives.strip()) < 100:
-        st.error("""Please tell us above why you'd like to join BuddyMeUp in at least 100 characters; 
+    objectives = st.text_area("Your coding objectives (at least 100 characters)", "").strip()
+    if len(objectives) < 100:
+        st.error("""Please tell us above why you'd like to join BuddyMeUp 
+                    and what you're hoping to achieve in at least 100 characters; 
                     the more descriptive, the better we could match you!""")
     else:
         participant_info["objectives"] = objectives
 
     st.markdown("<br>", unsafe_allow_html=True)
     personal_descr = st.text_area("""Please give a little description about yourself 
-                                        so that we can get to know you better""", "")
-    if len(personal_descr.strip()) < 100:
+                                        so that we can get to know you better
+                                        (at least 100 characters)""", "").strip()
+    if len(personal_descr) < 100:
         st.error("""Please write at least 100 characters above; 
                     the more descriptive, the better we could match you!""")
     else:
@@ -183,7 +185,7 @@ def signup():
 
     st.markdown("<br>", unsafe_allow_html=True)
     comments = st.text_area("Any comments you'd like to make", "")
-    participant_info["comments"] = comments
+    participant_info["comments"] = comments.strip()
 
     timestamp = datetime.now(tz=dt_timezone.utc)
     participant_info["timestamp"] = timestamp.strftime("%Y/%m/%d %H:%M:%S")
