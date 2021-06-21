@@ -626,7 +626,7 @@ def page_sign_up():
         st.markdown("""
                     <p style='margin-top: 30px; margin-bottom: 30px;'>
                     You can find the signup key in the WomenWhoCode Python Slack community.
-                    Having all BuddyMeUp participants join slack gives us a place to sinteract 
+                    Having all BuddyMeUp participants join slack gives us a place to interact 
                     and saves us the struggle from spamming your email/junk-folder.
                     </p>
                     """, unsafe_allow_html=True)
