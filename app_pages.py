@@ -134,16 +134,17 @@ def page_about():
         <hr class="content-divider">
         <h3 style="margin-top: 1rem">What's new in July 2021?</h3>
         <p>
-            We get it &mdash; you sign up to code with a buddy with the best of intentions:
-            maybe you plan to write and deploy a Flask application together, or
+            We get it &mdash; you signed up to code with a buddy with the best of intentions:
+            maybe you planned to write and deploy a Flask application together, or
             complete ten challenges on HackerRank by the end of your ten weeks...
             but by week two, life got in the way, and all your plans fell by the wayside 😞.
         </p>
         <p>
             Well, we <em>really</em> want each pair to achieve their coding goals, no matter 
             what they may be.  So, for extra motivation, this round we will have <strong>mentors</strong> 
-            personally checking in on each pair (who would like this option) every fortnight 
-            to offer support and make sure that you are on track 🚆.
+            personally checking in on each pair (in a non-Big-Brother-ish way, and 
+            only for those who would like this option) every fortnight 
+            to offer support and make sure that you are on track 🚆!
         </p>
         <div class="announce">
             <p style='text-align: center'>
