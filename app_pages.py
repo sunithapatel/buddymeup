@@ -120,7 +120,6 @@ def page_about():
             </div>
         </div>
         <p>
-            We will partner you up with one (or two!) Python enthusiast(s) based on your respective interests and preferences. You will be able to:
             We will partner you up for 10 weeks with one (or two!) coding enthusiast(s) 
             based on your respective interests and preferences. You will be able to:
             <ul>
@@ -627,7 +626,7 @@ def page_sign_up():
         st.markdown("""
                     <p style='margin-top: 30px; margin-bottom: 30px;'>
                     You can find the signup key in the WomenWhoCode Python Slack community.
-                    Having all BuddyMeUp participants join the Slack community gives us a place to communicate and interact 
+                    Having all BuddyMeUp participants join slack gives us a place to sinteract 
                     and saves us the struggle from spamming your email/junk-folder.
                     </p>
                     """, unsafe_allow_html=True)
