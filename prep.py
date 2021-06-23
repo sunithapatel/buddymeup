@@ -29,8 +29,8 @@ def prep_csv_data(track = "cloud"):
     """
 
     # for csv data # for cloud track or for python backup
-    file_path = conf_data["filepath"][track] + str(conf_data["round_num"]) + \
-                conf_data["file_name"]["signups"]
+    file_path = conf_data["filepath"][track] + str(conf_data["dates"]["year"]) + "/" +  \
+                str(conf_data["dates"]["round_num"]) + conf_data["file_name"]["signups"]
     # read google forms csv into pd.df
     try:
         df_timezone = pd.read_csv(file_path, usecols=["city", "state", "country"])
@@ -76,8 +76,8 @@ def prep_db_data(track="python"):
     conn.close()
     if df_raw.shape[0] == 0:
         print("no data in local db, referring to .csv instead")
-        file_path = conf_data["filepath"][track] + str(conf_data["round_num"]) + \
-                    conf_data["file_name"]["signups"]
+        file_path = conf_data["filepath"][track] + str(conf_data["dates"]["year"]) + "/" + \
+                    str(conf_data["dates"]["round_num"]) + conf_data["file_name"]["signups"]
         df_raw = pd.read_csv(file_path, usecols=dbq.var)
 
     return make_df(df_raw)

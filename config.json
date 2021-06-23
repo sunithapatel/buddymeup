@@ -1,8 +1,9 @@
 {
   "signup_open": "True",
+  "round_num_id" : "91",
   "dates": {
     "year": "2021",
-    "round_num": "3",
+    "round_num": "2",
     "start_date": "2021-07-05",
     "end_date": "2021-09-13",
     "signup_date_html": "June 21, 2021",
@@ -14,7 +15,7 @@
     "db_name": "buddymeup"
   },
   "filepath": {
-    "python": "datafiles_sens/python/pairing_"
+    "python": "datafiles_sens/python/"
   },
   "file_name": {
     "signups": "/survey_response.csv",
