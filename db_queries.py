@@ -67,11 +67,10 @@ signup_info_var = "ua.{}, ua.{}, ua.{}, ua.{}, ur.{}, " \
 
 signup_info = (f" SELECT {signup_info_var}"
                f" FROM users_rounds as ur"
-               f" INNER JOIN users_all as ua"
-               f" ON ur.fk_user_id = ua.id"
-               f" INNER JOIN locations as l"
-               f" ON ur.fk_location_id = l.id" 
-               f" WHERE ur.fk_round_id = 91;") #15 is round two! 91 is sround 3
+               f" INNER JOIN users_all as ua ON ur.fk_user_id = ua.id"
+               f" INNER JOIN locations as l ON ur.fk_location_id = l.id" 
+               f" INNER JOIN rounds as r ON ur.fk_round_id = r.id"
+               f" WHERE r.round_num = {conf_data['dates']['round_num']} AND r.year = {conf_data['dates']['year']};")
 
 
 prior_part = (f"SELECT * FROM matches;")
