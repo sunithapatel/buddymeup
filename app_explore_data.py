@@ -298,7 +298,7 @@ def encode_topics(df):
     # string to lowercase
     df = df.apply(lambda x: x.astype(str).str.lower())
 
-    for topic in q.topics_python:
+    for topic in conf_data["variables"]["topics"]:
         df[topic] = df["topic"].str.contains(topic).astype(int)
     df_formatted = df.drop(["topic"], axis=1)
 
