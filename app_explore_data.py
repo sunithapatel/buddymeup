@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 with open('config.json') as config_file:
     conf_data = json.load(config_file)
 
+topics = conf_data["variables"]["topics"]
+
 # Load the dataset
 def load_data():
     connection = dbs.init_db()
@@ -128,39 +130,23 @@ def sidebar_explorer(df):
                 """, unsafe_allow_html=True)
             # interest topic grouped by experience
             df_topics = encode_topics(df)
-            exp_topic_df = pd.DataFrame({
-                "data science": df_topics[df_topics["data science"] == 1]["experience"],
-                "machine learning": df_topics[df_topics["machine learning"] == 1]["experience"],
-                "mobile": df_topics[df_topics["mobile"] == 1]["experience"],
-                "backend": df_topics[df_topics["backend"] == 1]["experience"],
-                "frontend": df_topics[df_topics["frontend"] == 1]["experience"]
-            })
-            exp_topic_grouped_df = pd.DataFrame({
-                    "experience": ["No experience", "0-1 year", "1-3 years", "3+ years"],
-                    "data science": [sum(exp_topic_df["data science"] == "0 years, getting started"),
-                                    sum(exp_topic_df["data science"] == "0-1 year"),
-                                    sum(exp_topic_df["data science"] == "1-3 years"),
-                                    sum(exp_topic_df["data science"] == "3+ years")],
-                    "machine learning": [sum(exp_topic_df["machine learning"] == "0 years, getting started"),
-                                    sum(exp_topic_df["machine learning"] == "0-1 year"),
-                                    sum(exp_topic_df["machine learning"] == "1-3 years"),
-                                    sum(exp_topic_df["machine learning"] == "3+ years")],
-                    "mobile": [sum(exp_topic_df["mobile"] == "0 years, getting started"),
-                                    sum(exp_topic_df["mobile"] == "0-1 year"),
-                                    sum(exp_topic_df["mobile"] == "1-3 years"),
-                                    sum(exp_topic_df["mobile"] == "3+ years")],
-                    "frontend": [sum(exp_topic_df["frontend"] == "0 years, getting started"),
-                                    sum(exp_topic_df["frontend"] == "0-1 year"),
-                                    sum(exp_topic_df["frontend"] == "1-3 years"),
-                                    sum(exp_topic_df["frontend"] == "3+ years")],
-                    "backend": [sum(exp_topic_df["backend"] == "0 years, getting started"),
-                                    sum(exp_topic_df["backend"] == "0-1 year"),
-                                    sum(exp_topic_df["backend"] == "1-3 years"),
-                                    sum(exp_topic_df["backend"] == "3+ years")]
-            })
+            exp_topic_dict = {}
+            for topic in topics:
+                exp_topic_dict[topic] = df_topics[df_topics[topic] == 1]["experience"]
+            exp_topic_df = pd.DataFrame(exp_topic_dict)
+
+            exp_topic_grouped_dict = {}
+            for topic in topics:
+                exp_topic_grouped_dict[topic] = [sum(exp_topic_df[topic] == "0 years, getting started"),
+                                                sum(exp_topic_df[topic] == "0-1 year"),
+                                                sum(exp_topic_df[topic] == "1-3 years"),
+                                                sum(exp_topic_df[topic] == "3+ years")]
+
+            exp_topic_grouped_df = pd.DataFrame(exp_topic_grouped_dict)
+            exp_topic_grouped_df["experience"] = ["No experience", "0-1 year", "1-3 years", "3+ years"]
+
             selection = alt.selection_multi(fields=['Interest topic'], bind='legend')
-            topic_graph = alt.Chart(exp_topic_grouped_df).transform_fold(
-                ["data science", "machine learning", "mobile", "backend", "frontend"],
+            topic_graph = alt.Chart(exp_topic_grouped_df).transform_fold(topics,
                 as_ = ["Interest topic", "Num_buddies"]
             ).mark_bar(
                 opacity = 0.5
