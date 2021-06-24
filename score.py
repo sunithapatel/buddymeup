@@ -116,7 +116,7 @@ def prior_buddy_check(idx_dict, track):
         df_m.dropna(how="all", inplace=True)
 
     # get lists of all participants prior this round, all participants of this round that have been in prior rounds too
-    df_prev = df_m[df_m["fk_round_id"] != conf_data["round_num_id"]]
+    df_prev = df_m[df_m["round_num"] != conf_data["dates"]["round_num"]]
     userid_current = idx_dict.values()
     userid_past = {*list(df_prev["fk_user_1_id"]), *list(df_prev["fk_user_2_id"])}
     userid_repeating = set(list(set(userid_current) & set(userid_past)))

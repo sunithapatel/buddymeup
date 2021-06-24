@@ -73,7 +73,7 @@ signup_info = (f" SELECT {signup_info_var}"
                f" WHERE r.round_num = {conf_data['dates']['round_num']} AND r.year = {conf_data['dates']['year']};")
 
 
-prior_part = (f"SELECT * FROM matches;")
+prior_part = (f"SELECT * FROM matches INNER JOIN rounds as r ON m.fk_round_id = r.id;")
 
 
 
