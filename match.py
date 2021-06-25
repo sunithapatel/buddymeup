@@ -25,7 +25,7 @@ def save_matches(df_matched, track=track):
         dbq.m_single_insert(conn, matches_db)
     else:
         save = ".csv"
-        to_path = conf_data["filepath"][track] + str(conf_data["round_num"]) + "/"+ dt_today + conf_data["file_name"]["buddy_results"]
+        to_path = conf_data["filepath"][track] + str(conf_data["dates"]["round_num"]) + "/"+ dt_today + conf_data["file_name"]["buddy_results"]
         df_matched.to_csv(to_path, sep=',', decimal=".", encoding='utf-8', index=False, header=True)
     return print("saved {} to {}".format(track, save))
 
@@ -129,7 +129,7 @@ def pair_participants(data, df_matrix, email_ids, idx_dict):
     else:
         print("number of participants was even! No double buddies")
 
-    df_matched["round"] = conf_data["round_num"]
+    df_matched["round"] = conf_data["dates"]["round_num"]
     return df_matched
 
 

@@ -29,8 +29,8 @@ def prep_csv_data(track = "cloud"):
     """
 
     # for csv data # for cloud track or for python backup
-    file_path = conf_data["filepath"][track] + str(conf_data["round_num"]) + \
-                conf_data["file_name"]["signups"]
+    file_path = conf_data["filepath"][track] + str(conf_data["dates"]["year"]) + "/" +  \
+                str(conf_data["dates"]["round_num"]) + conf_data["file_name"]["signups"]
     # read google forms csv into pd.df
     try:
         df_timezone = pd.read_csv(file_path, usecols=["city", "state", "country"])
@@ -76,8 +76,8 @@ def prep_db_data(track="python"):
     conn.close()
     if df_raw.shape[0] == 0:
         print("no data in local db, referring to .csv instead")
-        file_path = conf_data["filepath"][track] + str(conf_data["round_num"]) + \
-                    conf_data["file_name"]["signups"]
+        file_path = conf_data["filepath"][track] + str(conf_data["dates"]["year"]) + "/" + \
+                    str(conf_data["dates"]["round_num"]) + conf_data["file_name"]["signups"]
         df_raw = pd.read_csv(file_path, usecols=dbq.var)
 
     return make_df(df_raw)
@@ -115,32 +115,32 @@ def transform_data(df):
     df = df[df.columns.difference(string)]
 
     # encoding categorical data (where assignment matters)
-    df["timezone_pref"] = df["timezone_pref"].map(
+    df.loc[:, "timezone_pref"] = df["timezone_pref"].map(
         {"different timezone / nationality": 1, "same timezone": 0, "timezone doesn´t matter": 2})
-    df["relation_pref"] = df["relation_pref"].map(
+    df.loc[:, "relation_pref"] = df["relation_pref"].map(
         {'more structured - set schedule': 1, 'more casual - we will contact each other when we want to talk': 0})
 
-    df["gender"] = df["gender"].map(
+    df.loc[:, "gender"] = df["gender"].map(
         {"female": 1, "male": 0, "non-binary": 2, "do not want to disclose": 3})
-    df["gender_pref"] = df["gender_pref"].map(
+    df.loc[:, "gender_pref"] = df["gender_pref"].map(
         {"female": 1, "male": 0, "non-binary": 2, 'gender doesn´t matter to you': 3})
-    df["amount_buddies"] = df["amount_buddies"].map(
+    df.loc[:, "amount_buddies"] = df["amount_buddies"].map(
         {"i´d rather start with one!": 1, "sure!": 2})
-    df["freq_pref"] = df["freq_pref"].map(
+    df.loc[:, "freq_pref"] = df["freq_pref"].map(
         {"daily": 0, "weekly": 1, "bi-weekly": 2, "monthly": 3})
-    df["experience"] = df["experience"].map(
+    df.loc[:, "experience"] = df["experience"].map(
         {"0 years, getting started": 1,
          "0-1 year": 2,
          "1-3 years": 3,
          "3+ years": 4})
-    df["mentor_choice"] = df["mentor_choice"].map(
+    df.loc[:, "mentor_choice"] = df["mentor_choice"].map(
         {"Yes": 1,
          "No - I prefer to be matched with someone on the same level or with more experience": 2,
          "Either would be great": 0})
 
     # formatting numerical data
-    df["timezone"] = df["timezone"].apply(lambda x: float(x))
-    df["age"] = df["age"].apply(lambda x: (int(float(x))))
+    df.loc[:,"timezone"] = df["timezone"].apply(lambda x: float(x))
+    df.loc[:,"age"] = df["age"].apply(lambda x: (int(float(x))))
 
     # df with encoded columns and users_round_info_id
     email_ids = df["email"] # keep this to be able to manually check later

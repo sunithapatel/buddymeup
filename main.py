@@ -2,9 +2,6 @@ import prep as p
 import score as s
 import match as m
 import analyze_evaluate as ae
-
-
-
 track = "python"
 
 print("before __name__ guard")
