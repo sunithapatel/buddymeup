@@ -16,7 +16,12 @@ from pytz import timezone, utc
 from timezonefinder import TimezoneFinder
 import geopandas
 import matplotlib.pyplot as plt
+import json
 
+with open('config.json') as config_file:
+    conf_data = json.load(config_file)
+
+topics = conf_data["variables"]["topics"]
 
 def signup():
     """
@@ -88,7 +93,7 @@ def signup():
 
     topic, check = st.beta_columns(2)
     topic = topic.multiselect("What area(s) of Python are you focusing on?",
-                                ("Data Science", "Machine Learning", "Mobile", "Backend", "Frontend"))
+                                ([topic.capitalize() for topic in topics]))
     if not topic:
         check.error(f"Please input one or more focus topic(s)")
     else:

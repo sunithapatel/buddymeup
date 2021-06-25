@@ -55,7 +55,7 @@ def prep_csv_data(track = "cloud"):
             offset = asf.utc_offset(location_valid, latitude, longitude)
             timezone_list.append(offset)
 
-        cols = dbq.var.copy()
+        cols = conf_data["variables"]["attributes"].copy()
         cols.remove("timezone")
         df_og = pd.read_csv(file_path, usecols=cols)
         df_og.dropna(how="all", inplace=True)
@@ -78,7 +78,7 @@ def prep_db_data(track="python"):
         print("no data in local db, referring to .csv instead")
         file_path = conf_data["filepath"][track] + str(conf_data["dates"]["year"]) + "/" + \
                     str(conf_data["dates"]["round_num"]) + conf_data["file_name"]["signups"]
-        df_raw = pd.read_csv(file_path, usecols=dbq.var)
+        df_raw = pd.read_csv(file_path, usecols=conf_data["variables"]["attributes"])
 
     return make_df(df_raw)
   

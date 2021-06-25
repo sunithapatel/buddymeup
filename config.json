@@ -3,7 +3,7 @@
   "round_num_id" : "91",
   "dates": {
     "year": "2021",
-    "round_num": "2",
+    "round_num": "1",
     "start_date": "2021-07-05",
     "end_date": "2021-09-13",
     "signup_date_html": "June 21, 2021",
@@ -26,5 +26,11 @@
   "contact": {
     "email": "buddymeup@womenwhocode.com",
     "slack": "@Isabella"
+  },
+  "variables": {
+    "attributes" : ["id", "email", "name", "slack_name", "gender", "timezone", "age", "topic",
+              "experience", "mentor_choice", "relation_pref", "freq_pref", "gender_pref",
+              "timezone_pref", "amount_buddies", "objectives", "personal_descr"],
+    "topics" : ["data science", "mobile", "machine learning", "backend", "frontend"]
   }
 }

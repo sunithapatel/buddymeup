@@ -57,43 +57,23 @@ def m_single_insert(conn, df):
 
 
 
-
-
-
-
-
-
-
-
-
 ## QUERIES
-
-# add users_round_info_id here (add find solution for .csv)
-var = ['id', 'email', 'name', 'slack_name', 'gender', 'timezone', 'age',  'topic',
-              'experience', 'mentor_choice', 'relation_pref', 'freq_pref', 'gender_pref',
-              'timezone_pref', 'amount_buddies', 'objectives', 'personal_descr'] #todo put this into config file
-
-topics_python = ["data science", "mobile", "machine learning", "backend", "frontend"] #todo put this into config file
-
 
 signup_info_var = "ua.{}, ua.{}, ua.{}, ua.{}, ur.{}, " \
                   "l.{}, " \
                   "ur.{}, ur.{}, ur.{}, ur.{}, ur.{}, " \
                   "ur.{}, ur.{}, ur.{}, ur.{}, " \
-                  "ur.{}, ur.{}".format(*var) #*conf_data["var"]["python"]
+                  "ur.{}, ur.{}".format(*conf_data["variables"]["attributes"])
 
 signup_info = (f" SELECT {signup_info_var}"
                f" FROM users_rounds as ur"
-               f" INNER JOIN users_all as ua"
-               f" ON ur.fk_user_id = ua.id"
-               f" INNER JOIN locations as l"
-               f" ON ur.fk_location_id = l.id" 
-               f" WHERE ur.fk_round_id = 91;") #15 is round two! 91 is sround 3
+               f" INNER JOIN users_all as ua ON ur.fk_user_id = ua.id"
+               f" INNER JOIN locations as l ON ur.fk_location_id = l.id" 
+               f" INNER JOIN rounds as r ON ur.fk_round_id = r.id"
+               f" WHERE r.round_num = {conf_data['dates']['round_num']} AND r.year = {conf_data['dates']['year']};")
 
 
-
-
-prior_part = (f"SELECT * FROM matches;")
+prior_part = (f"SELECT * FROM matches INNER JOIN rounds as r ON m.fk_round_id = r.id;")
 
 
 
