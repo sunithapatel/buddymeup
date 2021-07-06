@@ -4,10 +4,10 @@
   "dates": {
     "year": "2021",
     "round_num": "1",
-    "start_date": "2021-07-05",
-    "end_date": "2021-09-13",
+    "start_date": "2021-07-19",
+    "end_date": "2021-09-27",
     "signup_date_html": "June 21, 2021",
-    "start_date_html": "July 05, 2021"
+    "start_date_html": "July 19, 2021",
   },
   "db": {
     "user": "postgres",
